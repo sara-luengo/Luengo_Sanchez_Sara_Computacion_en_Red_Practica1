@@ -6,28 +6,40 @@ sys.setdefaultencoding('utf-8')
 app = Flask(__name__)
 
 data=[
+#	{
+#		'created_at':'0',
+#		'entry_id': '0',
+#		'field1': '0',
+#		'field2': '0',
+#		'field3': '0',
+#		'field4': '0',
+#		'field5':'0'
+#	}
+]
+last_data=[
 	{
-		'created_at':'0',
-		'entry_id': '0',
-		'field1': '0',
-		'field2': '0',
-		'field3': '0',
-		'field4': '0',
-		'field5':'0'
+		'created_at':'',
+		'entry_id': '',
+		'field1': '',
+		'field2': '',
+		'field3': '',
+		'field4': '',
+		'field5':''
 	}
 ]
 tipo=[
-	{
-		'tipo':''
-	}
+#	{
+#		'tipo':''
+#	}
 ]
 
 valor_medio=[
-	{
-		'valor': '',
-		'database':''
-	}
+#	{
+#		'valor': '',
+#		'database':''
+#	}
 ]
+
 READ_API_KEY='XPS2IBDDGV9QU4G2'
 CHANNEL_ID= '622947'
 ENTRIES=100
@@ -35,9 +47,15 @@ database='MongoDB'
 @app.route('/',methods = ['POST', 'GET'])
 def home():
 	global data
+	global last_data
 	global tipo
 	global database
 	global valor_medio
+	read_last_data = urllib2.urlopen("https://api.thingspeak.com/channels/%s/feeds.json?results=%d?api_key=%s" \
+                       % (CHANNEL_ID,1,READ_API_KEY))
+	response_last_read = read_last_data.read()
+	last_data=json.loads(response_last_read)
+	read_last_data.close()
 	if request.method == 'POST':
 		if "umbral" in request.form:
 			tipo=[{'tipo':'Registros que superan el umbral:'}]
@@ -102,8 +120,8 @@ def home():
 		elif "graficas" in request.form:
 			return redirect("https://thingspeak.com/channels/622947")
 	elif request.method =='GET':
-		return render_template('home.html', tipo=tipo, data=data,valor_medio=valor_medio)
-	return render_template('home.html', tipo=tipo, data=data,valor_medio=valor_medio)
+		return render_template('home.html', tipo=tipo, data=data,valor_medio=valor_medio,last_data=last_data['feeds'])
+	return render_template('home.html', tipo=tipo, data=data,valor_medio=valor_medio,last_data=last_data['feeds'])
 
 
 if __name__== '__main__':

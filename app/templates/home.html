@@ -11,7 +11,18 @@
 				<h1 class="logo">Meneame App</h1>
 			</div>
 		</header>
-	
+		<p>Ultimo dato almacenado:<p>
+		<ul>
+		{% for item in last_data %}
+    		<p>Titulo: {{item.field1}}<p>
+    		<p>Clics: {{item.field2}}<p>
+    		<p>Meneos: {{item.field3}}<p>
+    		<p>Hora: {{item.field4}}<p>
+    		<p>Fecha: {{item.field5}}<p>
+    		<p>&nbsp<p>
+		{% endfor %}
+		</ul>
+
 		<form action = "http://localhost:5000/" method = "post">
 				<p>Introduce el umbral deseado:
 				<input type = "text" name = "nm" />
