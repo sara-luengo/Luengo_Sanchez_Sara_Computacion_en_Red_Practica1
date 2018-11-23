@@ -53,4 +53,7 @@ mongo_database=mongo_client["meneame"]
 col_mongo=mongo_database["Noticia"]
 noticia={"Titulo:":titulo_string, "Clics:":clics_words[2],"Meneos:":meneos_words[1], "Hora:": hora, "Fecha": fecha}
 col_mongo.insert_one(noticia)
+#Descomentar para borrar vaciar la base de datos MongoDB:
+#col_mongo.remove()
+#print(col_mongo.find().count())
 

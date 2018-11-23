@@ -58,7 +58,7 @@ def home():
 	read_last_data.close()
 	if request.method == 'POST':
 		if "umbral" in request.form:
-			tipo=[{'tipo':'Registros que superan el umbral:'}]
+			tipo=[{'tipo':'Ultimos 10 registros que superan el umbral (ordenados de primero a ultimo):'}]
 			while len(valor_medio) > 0 : valor_medio.pop()
 			while len(data) > 1 : data.pop()
 			umbral = request.form['nm']
@@ -68,9 +68,9 @@ def home():
 			data_total=json.loads(response_read)
 			data_feeds=data_total['feeds']
 			contador=0;
-			data=[{'created_at':'0','entry_id': '0','field1': '0','field2': '0','field3': '0','field4': '0','field5':'0'}]
+			data=[{'created_at':'','entry_id': '','field1': '','field2': '','field3': '','field4': '','field5':''}]
 			for dato in data_feeds:
-				if dato['field2']>umbral:
+				if (umbral=='' or int(dato['field2'])>int(umbral)):
 					if contador==0:
 						data[0]=dato
 					else:
