@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Meneame App</title>
+		<strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"><strong>
+	</head>
+	<body>
+
+		<header>
+			<div class="container">
+				<h1 class="logo">Meneame App</h1>
+			</div>
+		</header>
+	
+		<form action = "http://localhost:5000/" method = "post">
+				<p>Introduce el umbral deseado:
+				<input type = "text" name = "nm" />
+				<input type = "submit" name="umbral" value = "Enviar Umbral" /></p>
+				<p><input type = "submit" name="vmedio" value = "Calculo valor medio" /></p>
+				<p><input type = "submit" name="graficas" value = "Graficas externas" /></p>
+		</form>
+		
+		<p>&nbsp<p>
+		
+		<ul>
+		{% for item in tipo %}
+    		<p>{{item.tipo}}<p>
+    	{% endfor %}
+		</ul>
+		
+		<p>&nbsp<p>
+		
+		<ul>
+		{% for item in data %}
+    		<p>Titulo: {{item.field1}}<p>
+    		<p>Clics: {{item.field2}}<p>
+    		<p>Meneos: {{item.field3}}<p>
+    		<p>Hora: {{item.field4}}<p>
+    		<p>Fecha: {{item.field5}}<p>
+    		<p>&nbsp<p>
+		{% endfor %}
+		</ul>
+
+		<ul>
+		{% for item in valor_medio %}
+    		<p>Valor:{{item.valor}}<p>
+    		<p>Base de datos utilizada para el calculo: {{item.database}}<p>
+    	{% endfor %}
+		</ul>
+	
+	</body>
+</html>
+
+		
